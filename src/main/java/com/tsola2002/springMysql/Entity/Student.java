@@ -7,12 +7,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity(name = "Student")
 @NoArgsConstructor
-@Table(name = "TBL_STUDENT")
+@Table(name = "TBL_STUDENT",
+        uniqueConstraints = {
+          @UniqueConstraint(name = "student_email_unique", columnNames = "email")
+        }
+)
 public class Student {
 
   @Id
@@ -46,8 +51,8 @@ public class Student {
   @Column(
       name = "email",
       nullable = false,
-      columnDefinition = "TEXT",
-      unique = true
+      columnDefinition = "TEXT"
+      //unique = true
   )
   private String email;
 
@@ -57,8 +62,7 @@ public class Student {
   )
   private Integer age;
 
-  public Student(Long id, String firstName, String lastName, String email, Integer age) {
-    this.id = id;
+  public Student(String firstName, String lastName, String email, Integer age) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
