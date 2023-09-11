@@ -1,5 +1,6 @@
 package com.tsola2002.springMysql;
 
+import com.github.javafaker.Faker;
 import com.tsola2002.springMysql.Entity.Student;
 import com.tsola2002.springMysql.Repository.StudentRepository;
 import java.util.List;
@@ -18,17 +19,32 @@ public class SpringMysqlApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(StudentRepository studentRepository){
 		return args -> {
-			Student maria = new Student("Maria", "Jones", "Maria.Jones@edu", 21);
-			Student maria2 = new Student("Maria", "Jones", "Maria.Jones@edu", 25);
-			Student ahmed = new Student("Ahmed", "Ali", "Ahmed.Ali@edu", 18);
+
+			Faker faker = new Faker();
+			for (int i = 0; i < 20 ; i++) {
+				String firstName = faker.name().firstName();
+				String lastName = faker.name().lastName();
+				String email = String.format("%s.%s@amigoscode.edu", firstName, lastName);
+				Student student = new Student(
+						firstName,
+						lastName,
+						email,
+						faker.number().numberBetween(17, 55));
+				studentRepository.save(student);
+			}
+
+//			Student maria = new Student("Maria", "Jones", "Maria.Jones@edu", 21);
+//			Student maria2 = new Student("Maria", "Jones", "Maria.Jones@edu", 25);
+//			Student ahmed = new Student("Ahmed", "Ali", "Ahmed.Ali@edu", 18);
+
 			//studentRepository.save(maria);
 
 
-			System.out.println("SAVING MARIA & AHMED");
-			studentRepository.saveAll(List.of(maria, maria2, ahmed));
-
-			System.out.println("DELETING MARIA WITH ID 2");
-			System.out.println(studentRepository.deleteStudentById(3L));
+//			System.out.println("SAVING MARIA & AHMED");
+//			studentRepository.saveAll(List.of(maria, maria2, ahmed));
+//
+//			System.out.println("DELETING MARIA WITH ID 2");
+//			System.out.println(studentRepository.deleteStudentById(3L));
 
 //			System.out.println("USING NATIVE QUERIES & NAMED PARAMETERS");
 //			studentRepository.selectStudentWhereFirstNameAndAgeIsGreaterThanOrEqualNative(
