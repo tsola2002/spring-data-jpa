@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 
 @Entity(name = "Student")
 @NoArgsConstructor
-@Table(name = "TBL_STUDENT",
-        uniqueConstraints = {
-          @UniqueConstraint(name = "student_email_unique", columnNames = "email")
-        }
+@Table(name = "TBL_STUDENT"
+//        ,uniqueConstraints = {
+//          @UniqueConstraint(name = "student_email_unique", columnNames = "email")
+//        }
 )
 public class Student {
 
